@@ -1,0 +1,9 @@
+as/
+bin/
+db/
+dbd/
+O.*/
+envPaths
+\#*#
+*~
+

@@ -1,0 +1,9 @@
+record(ao, "$(SYS){$(DEV)}Test")
+{
+    field(DESC, "My test PV")
+    field(VAL, "5.0")
+    field(PREC, "6")
+    field(EGU, "cookies")
+    info(autosaveFields_pass0, "VAL")
+}
+
