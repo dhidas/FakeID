@@ -1,0 +1,84 @@
+#include "MVariables.pmc"
+
+I4=0              ; Communications Integrity Mode
+I5=3              ; PLC Program Control
+
+
+// Channels 1-4 PFM Clock Settings
+I7003=2290        ; Servo IC m Hardware Clock Control
+I7004=13          ; Servo IC m PWM Deadtime / PFM Pulse Width Control
+I169,4,100=2427   ; Motor xx Output Command Limit
+
+// Channels 5-8 PFM Clock Settings
+I7103=2290        ; Servo IC m Hardware Clock Control
+I7104=13          ; Servo IC m PWM Deadtime / PFM Pulse Width Control
+I569,4,100=2427   ; Motor xx Output Command Limit
+
+
+// Encoder Conversion Table, for channels 1
+I8000=$C78000     ; Entry 1 incremental encoder, no extension
+I8001=$C78008     ; Entry 2 incremental encoder, no extension
+I8002=$C78010     ; Entry 3 incremental encoder, no extension
+I8003=$C78018     ; Entry 4 incremental encoder, no extension
+I8004=$C78100     ; Entry 1 incremental encoder, no extension
+I8005=$C78108     ; Entry 2 incremental encoder, no extension
+I8006=$C78110     ; Entry 3 incremental encoder, no extension
+I8007=$C78118     ; Entry 4 incremental encoder, no extension
+I8008=$000000     ; End of ECT
+
+
+
+// Channels 1-4 Output Mode Select, Encoder/Decode
+I7016,4,10=3      ; Servo IC m Channel n Output Mode Select
+I7010,4,10=8      ; Servo IC m Channel n Encoder/Timer Decode Control
+
+// Channels 1-4 Output Mode Select, Encoder/Decode
+I7116,4,10=3      ; Servo IC m Channel n Output Mode Select
+I7110,4,10=8      ; Servo IC m Channel n Encoder/Timer Decode Control
+
+// Channels 1-8 Command Output Register
+I102=$78004       ; Channel 1, PFM
+I202=$7800C       ; Channel 2, PFM
+I302=$78014       ; Channel 3, PFM
+I402=$7801C       ; Channel 4, PFM
+I502=$78104       ; Channel 1, PFM
+I602=$7810C       ; Channel 2, PFM
+I702=$78114       ; Channel 3, PFM
+I802=$7811C       ; Channel 4, PFM
+
+// Flags: Ignore limits
+;I124,8,100=$820401    ;Motor xx Flag Mode Control
+I124,8,100=$120401    ; Motor xx Flag Mode Control
+
+
+I100,8,100=1      ; Channels 1-8 active
+
+
+I103=$3501 I104=$3501 ; Channel 1 position and velocity pointers
+I203=$3502 I204=$3502 ; Channel 2 position and velocity pointers
+I303=$3503 I304=$3503 ; Channel 3 position and velocity pointers
+I403=$3504 I404=$3504 ; Channel 4 position and velocity pointers
+I503=$3501 I504=$3505 ; Channel 1 position and velocity pointers
+I603=$3501 I604=$3506 ; Channel 1 position and velocity pointers
+I703=$3501 I704=$3507 ; Channel 1 position and velocity pointers
+I803=$3501 I804=$3508 ; Channel 1 position and velocity pointers
+
+
+I115,8,100=10         ; Motor xx Abort/Limit Deceleration Rate
+I116,8,100=1          ; Motor xx Maximum Program Velocity
+I117,8,100=1          ; Motor xx Maximum Program Acceleration
+I119,8,100=1          ; Motor xx Maximum Jog/Home Acceleration
+I122,8,100=1          ; Motor xx Jog Speed
+I123,8,100=1          ; Motor xx Home Speed and Direction
+I126,8,100=0          ; Motor xx Home Offset
+
+// Channels 1,5 PID Gains (with default clock settings):
+I130,8,100=11190      ; Motor xx PID Proportional Gain
+I131,8,100=0          ; Motor xx PID Derivative Gain
+I132,8,100=15038      ; Motor xx PID Velocity Feedforward Gain
+I133,8,100=0          ; Motor xx PID Integral Gain
+I134,8,100=0          ; Motor xx PID Integration Mode
+I135,8,100=0          ; Motor xx PID Acceleration Feedforward Gain
+
+
+

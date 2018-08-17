@@ -1,0 +1,11 @@
+Open PLC 1 Clear
+
+
+Disable PLC 0
+Disable PLCC 0
+Disable PLC 2..31
+Disable PLCC 1..31
+
+Disable PLC 1
+
+Close
