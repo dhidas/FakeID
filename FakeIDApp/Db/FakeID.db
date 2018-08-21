@@ -7,3 +7,59 @@ record(ao, "$(SYS){$(DEV)}Test")
     info(autosaveFields_pass0, "VAL")
 }
 
+
+
+record(motor, "$(SYS){$(DEV)-Ax:Gap}") {
+  field(DTYP, "asynMotor")
+  field(OUT, "@asyn(PMAC1CS2,0)")
+  field(EGU, "um")
+  field(DESC, "Gap")
+  field(MRES, "1")
+  field(RTRY, "0")
+  field(NTM, "NO")
+  #field(VELO, "100")
+  #field(ACCL, "100000")
+  field(PREC, "3")
+}
+
+
+record(motor, "$(SYS){$(DEV)-Ax:Elev}") {
+  field(DTYP, "asynMotor")
+  field(OUT, "@asyn(PMAC1CS2,1)")
+  field(EGU, "um")
+  field(DESC, "Elevation")
+  field(MRES, "1")
+  field(RTRY, "0")
+  field(NTM, "NO")
+  #field(VELO, "100")
+  #field(ACCL, "100000")
+  field(PREC, "3")
+}
+
+
+record(motor, "$(SYS){$(DEV)-Ax:Taper}") {
+  field(DTYP, "asynMotor")
+  field(OUT, "@asyn(PMAC1CS2,2)")
+  field(EGU, "um")
+  field(DESC, "Taper")
+  field(MRES, "1")
+  field(RTRY, "0")
+  field(NTM, "NO")
+  #field(VELO, "100")
+  #field(ACCL, "100000")
+  field(PREC, "3")
+}
+
+
+record(motor, "$(SYS){$(DEV)-Ax:Tilt}") {
+  field(DTYP, "asynMotor")
+  field(OUT, "@asyn(PMAC1CS2,3)")
+  field(EGU, "um")
+  field(DESC, "Tilt")
+  field(MRES, "1")
+  field(RTRY, "0")
+  field(NTM, "NO")
+  #field(VELO, "100")
+  #field(ACCL, "100000")
+  field(PREC, "3")
+}
