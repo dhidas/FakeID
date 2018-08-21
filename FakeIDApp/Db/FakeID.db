@@ -19,7 +19,7 @@ record(motor, "$(SYS){$(DEV)-Ax:Gap}") {
   field(NTM, "NO")
   #field(VELO, "100")
   #field(ACCL, "100000")
-  field(PREC, "3")
+  field(PREC, "6")
 }
 
 

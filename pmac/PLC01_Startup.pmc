@@ -23,4 +23,7 @@ CMD"#1j/#2j/#3j/#4j/"
 CMD"#1hmz#2hmz#3hmz#4hmz"
 Disable PLC 1
 
+Enable PLC 5
+Enable PLC 18
+
 Close

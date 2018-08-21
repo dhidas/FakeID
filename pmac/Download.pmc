@@ -14,4 +14,6 @@
 
 
 ;#include "Test.pmc"
+#include "PLC05_cpu_load.pmc"
+#include "PLC18_CS02_Gap.pmc"
 #include "PLC01_Startup.pmc"

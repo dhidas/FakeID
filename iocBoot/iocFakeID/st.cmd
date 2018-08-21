@@ -46,16 +46,25 @@ dbLoadRecords("../../db/motor.db","P=$(sys),M={$(dev)-Ax:TD},MOTOR=PMAC1,ADDR=1,
 dbLoadRecords("../../db/motor.db","P=$(sys),M={$(dev)-Ax:TU},MOTOR=PMAC1,ADDR=2,DESC=Top Upstream Mtr,      DTYP=asynMotor")
 dbLoadRecords("../../db/motor.db","P=$(sys),M={$(dev)-Ax:BD},MOTOR=PMAC1,ADDR=3,DESC=Bottom Downstream Mtr, DTYP=asynMotor")
 dbLoadRecords("../../db/motor.db","P=$(sys),M={$(dev)-Ax:BU},MOTOR=PMAC1,ADDR=4,DESC=Bottom Upstream Mtr,   DTYP=asynMotor")
-dbLoadRecords("../../db/motorstatus.db","SYS=$(sys),DEV={$(dev)-Ax:TD},PORT=P0,AXIS=1")
-dbLoadRecords("../../db/pmacStatus.db","SYS=$(sys),PMAC=$(dev),VERSION=1,PLC=5,NAXES=1,PORT=P0")
+
+dbLoadRecords("../../db/pmacStatus.db","SYS=$(sys),PMAC=$(dev),VERSION=1,PLC=5,NAXES=4,PORT=P0")
 dbLoadRecords("../../db/pmac_asyn_motor.db","SYS=$(sys),DEV={$(dev)-Ax:TD},ADDR=1,SPORT=P0,DESC=asd,PREC=5,EGU=cts")
+dbLoadRecords("../../db/motor.db","P=$(sys),M={$(dev)-MtrX},MOTOR=PMAC1,ADDR=1,DESC=Horizontal Motor,DTYP=asynMotor,MRES=1,ERES=1,EGU=um")
+dbLoadRecords("../../db/motorstatus.db","SYS=$(sys),DEV={$(dev)-MtrX},PORT=P0,AXIS=1")
 dbLoadRecords("../../db/pmacStatusAxis.db","SYS=$(sys),DEV={$(dev)-Ax:1},AXIS=1,PORT=P0")
+dbLoadRecords("../../db/pmacStatusAxis.db","SYS=$(sys),DEV={$(dev)-Ax:2},AXIS=2,PORT=P0")
+dbLoadRecords("../../db/pmacStatusAxis.db","SYS=$(sys),DEV={$(dev)-Ax:3},AXIS=3,PORT=P0")
+dbLoadRecords("../../db/pmacStatusAxis.db","SYS=$(sys),DEV={$(dev)-Ax:4},AXIS=4,PORT=P0")
+
 dbLoadRecords("../../db/asynRecord.db","P=$(sys),R={$(dev)}Asyn,ADDR=1,PORT=P0,IMAX=128,OMAX=128")
 
+# Attic, do I need?
+#dbLoadRecords("../../db/motorstatus.db","SYS=$(sys),DEV={$(dev)-Ax:TD},PORT=P0,AXIS=1")
+#dbLoadRecords("../../db/pmac_asyn_motor.db","SYS=$(sys),DEV={$(dev)-Ax:TD},ADDR=1,SPORT=P0,DESC=asd,PREC=5,EGU=cts")
 
 
-#pmacSetIdlePollPeriod(0, 500)
-#pmacSetMovingPollPeriod(0, 50)
+pmacSetIdlePollPeriod(0, 500)
+pmacSetMovingPollPeriod(0, 50)
 #dbLoadRecords("../../db/pmac_asyn_motor.db","SYS=$(sys),DEV={$(dev)-Ax:TD},ADDR=1,SPORT=P0,DESC=asd,PREC=5,EGU=cts")
 #dbLoadRecords("../../db/motor.db","P=$(sys),M={$(dev)-MtrX},MOTOR=PMAC1,ADDR=1,DESC=Horizontal Motor,DTYP=asynMotor,MRES=1,ERES=1,EGU=um")
 #dbLoadRecords("../../db/motorstatus.db","SYS=$(sys),DEV={$(dev)-MtrX},PORT=P0,AXIS=1")
