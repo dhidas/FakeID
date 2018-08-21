@@ -1,4 +1,11 @@
+
 Open PLC 1 Clear
+
+; Initial offsets specific to this device
+P_Mtr1_Offset = MTR1OFFSET
+P_Mtr2_Offset = MTR2OFFSET
+P_Mtr3_Offset = MTR3OFFSET
+P_Mtr4_Offset = MTR4OFFSET
 
 
 Disable PLC 0
@@ -6,6 +13,14 @@ Disable PLCC 0
 Disable PLC 2..31
 Disable PLCC 1..31
 
+
+; set the feedrate to 100%
+CMD"&2%100"
+
+CMD"&2#1->I#2->I#3->I#4->I"
+
+CMD"#1j/#2j/#3j/#4j/"
+CMD"#1hmz#2hmz#3hmz#4hmz"
 Disable PLC 1
 
 Close

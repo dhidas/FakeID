@@ -1,3 +1,17 @@
 #include "MVariables.pmc"
 #include "IVariables.pmc"
+#include "PVariables.pmc"
+#include "Kinematics.pmc"
+#include "PROG02_Gap.pmc"
+;#include "PROG01_Test.pmc"
+
+
+#define MTR1OFFSET 0
+#define MTR2OFFSET 0
+#define MTR3OFFSET 0
+#define MTR4OFFSET 0
+
+
+
+;#include "Test.pmc"
 #include "PLC01_Startup.pmc"

@@ -1,8 +1,7 @@
-#include "MVariables.pmc"
 
 I4=0              ; Communications Integrity Mode
 I5=3              ; PLC Program Control
-
+I63=1 ; Needed for pmac epics driver
 
 // Channels 1-4 PFM Clock Settings
 I7003=2290        ; Servo IC m Hardware Clock Control
@@ -35,7 +34,6 @@ I7010,4,10=8      ; Servo IC m Channel n Encoder/Timer Decode Control
 // Channels 1-4 Output Mode Select, Encoder/Decode
 I7116,4,10=3      ; Servo IC m Channel n Output Mode Select
 I7110,4,10=8      ; Servo IC m Channel n Encoder/Timer Decode Control
-
 // Channels 1-8 Command Output Register
 I102=$78004       ; Channel 1, PFM
 I202=$7800C       ; Channel 2, PFM

@@ -1,0 +1,10 @@
+#ifndef GUARD_PVariables_pmc
+#define GUARD_PVariables_pmc
+
+#define P_Mtr1_Offset   P1011
+#define P_Mtr2_Offset   P1012
+#define P_Mtr3_Offset   P1013
+#define P_Mtr4_Offset   P1014
+
+
+#endif

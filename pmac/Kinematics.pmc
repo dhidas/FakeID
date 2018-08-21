@@ -1,0 +1,62 @@
+#include "Constants.pmc"
+#include "PVariables.pmc"
+
+#define P_Mtr1_KinPos       P1
+#define P_Mtr2_KinPos       P2
+#define P_Mtr3_KinPos       P3
+#define P_Mtr4_KinPos       P4
+
+#define Q_A_Gap_KinPos      Q1
+#define Q_B_Ele_KinPos      Q2
+#define Q_C_Tap_KinPos      Q3
+#define Q_U_Tlt_KinPos      Q4
+
+// Forward kinematics temp Q variables
+// Q128..Q199
+#define Q_Fwd_Mtr1Tmp       Q128
+#define Q_Fwd_Mtr2Tmp       Q129
+#define Q_Fwd_Mtr3Tmp       Q130
+#define Q_Fwd_Mtr4Tmp       Q131
+
+#define Q_Inv_Gap_Tmp       Q228
+#define Q_Inv_Ele_Tmp       Q229
+#define Q_Inv_Tap_Tmp       Q230
+#define Q_Inv_Tlt_Tmp       Q231
+
+
+i5213=10   ; segmentation time (needed for lookahead)
+;i5220=50   ; lookahead length (needed to limit max velocity to max set in CS)
+i5250=1    ; Enable kinematics
+
+
+&2 Open Forward Clear
+
+// Compensate for the offsets
+Q_Fwd_Mtr1Tmp = (P_Mtr1_KinPos + P_Mtr1_Offset) / EncCntsPerUm
+Q_Fwd_Mtr2Tmp = (P_Mtr2_KinPos + P_Mtr2_Offset) / EncCntsPerUm
+Q_Fwd_Mtr3Tmp = (P_Mtr3_KinPos + P_Mtr3_Offset) / EncCntsPerUm
+Q_Fwd_Mtr4Tmp = (P_Mtr4_KinPos + P_Mtr4_Offset) / EncCntsPerUm
+Q_A_Gap_KinPos = (Q_Fwd_Mtr1Tmp + Q_Fwd_Mtr2Tmp + Q_Fwd_Mtr3Tmp + Q_Fwd_Mtr4Tmp)/2  // Q1 = A axis: GAP
+Q_B_Ele_KinPos = (Q_Fwd_Mtr1Tmp + Q_Fwd_Mtr2Tmp - Q_Fwd_Mtr3Tmp - Q_Fwd_Mtr4Tmp)/4  // Q2 = B axis: CENTER OFFSET
+Q_C_Tap_KinPos =  Q_Fwd_Mtr1Tmp + Q_Fwd_Mtr3Tmp - Q_Fwd_Mtr2Tmp - Q_Fwd_Mtr4Tmp     // Q3 = C axis: TAPER
+Q_U_Tlt_KinPos = (Q_Fwd_Mtr1Tmp - Q_Fwd_Mtr2Tmp - Q_Fwd_Mtr3Tmp + Q_Fwd_Mtr4Tmp)/2  // Q4 = U axis: TILT
+
+Close
+
+
+// ******************************************************************************
+// Gap Inverse kinematic
+// ******************************************************************************
+&2 Open Inverse Clear
+
+Q_Inv_Gap_Tmp = Q_A_Gap_KinPos * EncCntsPerUm
+Q_Inv_Ele_Tmp = Q_B_Ele_KinPos * EncCntsPerUm
+Q_Inv_Tap_Tmp = Q_C_Tap_KinPos * EncCntsPerUm
+Q_Inv_Tlt_Tmp = Q_U_Tlt_KinPos * EncCntsPerUm
+
+P_Mtr1_KinPos = Q_Inv_Gap_Tmp / 2 + Q_Inv_Ele_Tmp + Q_Inv_Tap_Tmp / 4 + Q_Inv_Tlt_Tmp / 2 - P_Mtr1_Offset
+P_Mtr2_KinPos = Q_Inv_Gap_Tmp / 2 + Q_Inv_Ele_Tmp - Q_Inv_Tap_Tmp / 4 - Q_Inv_Tlt_Tmp / 2 - P_Mtr2_Offset
+P_Mtr3_KinPos = Q_Inv_Gap_Tmp / 2 - Q_Inv_Ele_Tmp + Q_Inv_Tap_Tmp / 4 - Q_Inv_Tlt_Tmp / 2 - P_Mtr3_Offset
+P_Mtr4_KinPos = Q_Inv_Gap_Tmp / 2 - Q_Inv_Ele_Tmp - Q_Inv_Tap_Tmp / 4 + Q_Inv_Tlt_Tmp / 2 - P_Mtr4_Offset
+
+Close
