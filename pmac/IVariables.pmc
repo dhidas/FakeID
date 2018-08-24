@@ -78,5 +78,5 @@ I133,8,100=0          ; Motor xx PID Integral Gain
 I134,8,100=0          ; Motor xx PID Integration Mode
 I135,8,100=0          ; Motor xx PID Acceleration Feedforward Gain
 
-
+I180,8,100=1          ; Motor xx Power-Up Mode
 
