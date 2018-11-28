@@ -56,10 +56,10 @@ I103=$3501 I104=$3501 ; Channel 1 position and velocity pointers
 I203=$3502 I204=$3502 ; Channel 2 position and velocity pointers
 I303=$3503 I304=$3503 ; Channel 3 position and velocity pointers
 I403=$3504 I404=$3504 ; Channel 4 position and velocity pointers
-I503=$3501 I504=$3505 ; Channel 1 position and velocity pointers
-I603=$3501 I604=$3506 ; Channel 1 position and velocity pointers
-I703=$3501 I704=$3507 ; Channel 1 position and velocity pointers
-I803=$3501 I804=$3508 ; Channel 1 position and velocity pointers
+I503=$3505 I504=$3505 ; Channel 1 position and velocity pointers
+I603=$3506 I604=$3506 ; Channel 1 position and velocity pointers
+I703=$3507 I704=$3507 ; Channel 1 position and velocity pointers
+I803=$3508 I804=$3508 ; Channel 1 position and velocity pointers
 
 
 I115,8,100=10         ; Motor xx Abort/Limit Deceleration Rate
