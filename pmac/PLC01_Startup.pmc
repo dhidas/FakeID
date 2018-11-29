@@ -1,3 +1,5 @@
+#include "PVariables.pmc"
+
 
 Open PLC 1 Clear
 

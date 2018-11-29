@@ -5,24 +5,18 @@
 #include "PVariables.pmc"
 
 
-#define GAP         Q81
-#define ELEVATION   Q82
-#define TAPER       Q83
-#define TILT        Q84
-
-
-#define Q_Fwd_Mtr1Tmp_PR Q328
-#define Q_Fwd_Mtr2Tmp_PR Q329
-#define Q_Fwd_Mtr3Tmp_PR Q330
-#define Q_Fwd_Mtr4Tmp_PR Q331
+#define GAP         Q_A_KinReadbackPos
+#define ELEVATION   Q_B_KinReadbackPos
+#define TAPER       Q_C_KinReadbackPos
+#define TILT        Q_U_KinReadbackPos
 
 OPEN PLC18
 CLEAR
   ADDRESS&2
-  Q_Fwd_Mtr1Tmp_PR = (M162/(I108*32) + P_Mtr1_Offset) / EncCntsPerUm
-  Q_Fwd_Mtr2Tmp_PR = (M262/(I208*32) + P_Mtr2_Offset) / EncCntsPerUm
-  Q_Fwd_Mtr3Tmp_PR = (M362/(I308*32) + P_Mtr3_Offset) / EncCntsPerUm
-  Q_Fwd_Mtr4Tmp_PR = (M462/(I408*32) + P_Mtr4_Offset) / EncCntsPerUm
+  Q_Fwd_Mtr1Tmp_PR = (M162/(I108*32) + P_Mtr1_Offset) / kEncCntsPerUm
+  Q_Fwd_Mtr2Tmp_PR = (M262/(I208*32) + P_Mtr2_Offset) / kEncCntsPerUm
+  Q_Fwd_Mtr3Tmp_PR = (M362/(I308*32) + P_Mtr3_Offset) / kEncCntsPerUm
+  Q_Fwd_Mtr4Tmp_PR = (M462/(I408*32) + P_Mtr4_Offset) / kEncCntsPerUm
 
 
   GAP       = (Q_Fwd_Mtr1Tmp_PR + Q_Fwd_Mtr2Tmp_PR + Q_Fwd_Mtr3Tmp_PR + Q_Fwd_Mtr4Tmp_PR) / 2   // Q1 = A axis: GAP

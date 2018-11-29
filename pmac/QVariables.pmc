@@ -1,0 +1,49 @@
+#ifndef GUARD_QVariables_pmc
+#define GUARD_QVariables_pmc
+
+
+#define Q_A_Gap_KinPos      Q1
+#define Q_B_Ele_KinPos      Q2
+#define Q_C_Tap_KinPos      Q3
+#define Q_U_Tlt_KinPos      Q4
+
+#define Q_A_KinDemandPos  Q71
+#define Q_B_KinDemandPos  Q72
+#define Q_C_KinDemandPos  Q73
+#define Q_U_KinDemandPos  Q74
+
+
+// Axis Readback positions
+// Q81..Q89
+#define Q_A_KinReadbackPos  Q81
+#define Q_B_KinReadbackPos  Q82
+#define Q_C_KinReadbackPos  Q83
+#define Q_U_KinReadbackPos  Q84
+
+
+
+// Forward kinematics temp Q variables
+// Q128..Q199
+#define Q_Fwd_Mtr1Tmp       Q128
+#define Q_Fwd_Mtr2Tmp       Q129
+#define Q_Fwd_Mtr3Tmp       Q130
+#define Q_Fwd_Mtr4Tmp       Q131
+
+#define Q_Inv_Gap_Tmp       Q228
+#define Q_Inv_Ele_Tmp       Q229
+#define Q_Inv_Tap_Tmp       Q230
+#define Q_Inv_Tlt_Tmp       Q231
+
+#define Q_Fwd_Mtr1Tmp_PR Q328
+#define Q_Fwd_Mtr2Tmp_PR Q329
+#define Q_Fwd_Mtr3Tmp_PR Q330
+#define Q_Fwd_Mtr4Tmp_PR Q331
+
+
+
+
+
+
+
+
+#endif

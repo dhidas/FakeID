@@ -19,10 +19,10 @@ I8000=$C78000     ; Entry 1 incremental encoder, no extension
 I8001=$C78008     ; Entry 2 incremental encoder, no extension
 I8002=$C78010     ; Entry 3 incremental encoder, no extension
 I8003=$C78018     ; Entry 4 incremental encoder, no extension
-I8004=$C78100     ; Entry 1 incremental encoder, no extension
-I8005=$C78108     ; Entry 2 incremental encoder, no extension
-I8006=$C78110     ; Entry 3 incremental encoder, no extension
-I8007=$C78118     ; Entry 4 incremental encoder, no extension
+I8004=$C78100     ; Entry 5 incremental encoder, no extension
+I8005=$C78108     ; Entry 6 incremental encoder, no extension
+I8006=$C78110     ; Entry 7 incremental encoder, no extension
+I8007=$C78118     ; Entry 8 incremental encoder, no extension
 I8008=$000000     ; End of ECT
 
 
@@ -31,18 +31,19 @@ I8008=$000000     ; End of ECT
 I7016,4,10=3      ; Servo IC m Channel n Output Mode Select
 I7010,4,10=8      ; Servo IC m Channel n Encoder/Timer Decode Control
 
-// Channels 1-4 Output Mode Select, Encoder/Decode
+// Channels 5-8 Output Mode Select, Encoder/Decode
 I7116,4,10=3      ; Servo IC m Channel n Output Mode Select
 I7110,4,10=8      ; Servo IC m Channel n Encoder/Timer Decode Control
+
 // Channels 1-8 Command Output Register
 I102=$78004       ; Channel 1, PFM
 I202=$7800C       ; Channel 2, PFM
 I302=$78014       ; Channel 3, PFM
 I402=$7801C       ; Channel 4, PFM
-I502=$78104       ; Channel 1, PFM
-I602=$7810C       ; Channel 2, PFM
-I702=$78114       ; Channel 3, PFM
-I802=$7811C       ; Channel 4, PFM
+I502=$78104       ; Channel 5, PFM
+I602=$7810C       ; Channel 6, PFM
+I702=$78114       ; Channel 7, PFM
+I802=$7811C       ; Channel 8, PFM
 
 // Flags: Ignore limits
 ;I124,8,100=$820401    ;Motor xx Flag Mode Control

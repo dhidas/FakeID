@@ -1,7 +1,4 @@
-#define Q_A_KinDemandPos  Q71
-#define Q_B_KinDemandPos  Q72
-#define Q_C_KinDemandPos  Q73
-#define Q_U_KinDemandPos  Q74
+#include "QVariables.pmc"
 
 &2
 #1->I

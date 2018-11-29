@@ -1,6 +1,13 @@
 #ifndef GUARD_PVariables_pmc
 #define GUARD_PVariables_pmc
 
+
+#define P_Mtr1_KinPos       P1
+#define P_Mtr2_KinPos       P2
+#define P_Mtr3_KinPos       P3
+#define P_Mtr4_KinPos       P4
+
+
 #define P_Mtr1_Offset   P1011
 #define P_Mtr2_Offset   P1012
 #define P_Mtr3_Offset   P1013

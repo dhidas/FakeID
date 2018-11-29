@@ -1,9 +1,9 @@
-#include "MVariables.pmc"
+#include "MVariableDefs.pmc"
 #include "IVariables.pmc"
 #include "PVariables.pmc"
+#include "QVariables.pmc"
 #include "Kinematics.pmc"
 #include "PROG02_Gap.pmc"
-;#include "PROG01_Test.pmc"
 
 
 #define MTR1OFFSET 0
@@ -13,7 +13,6 @@
 
 
 
-;#include "Test.pmc"
 #include "PLC05_cpu_load.pmc"
 #include "PLC18_CS02_Gap.pmc"
 #include "PLC01_Startup.pmc"
