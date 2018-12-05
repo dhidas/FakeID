@@ -2,6 +2,7 @@ record(motor,"$(P)$(M)")
 {
   field(DESC,"$(DESC)")
   field(DTYP,"$(DTYP)")
+  field(VELO, "1")
   field(OUT,"@asyn($(MOTOR),$(ADDR))")
   field(RTRY,0)
 

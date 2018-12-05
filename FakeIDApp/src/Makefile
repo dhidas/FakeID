@@ -14,18 +14,17 @@ DBD += FakeID.dbd
 
 # FakeID.dbd will be made up from these files:
 FakeID_DBD += base.dbd
-FakeID_DBD += base.dbd
 FakeID_DBD += asyn.dbd
 FakeID_DBD += motorSupport.dbd
-FakeID_DBD += drvAsynIPPort.dbd
-FakeID_DBD += drvAsynSerialPort.dbd
+#FakeID_DBD += drvAsynIPPort.dbd
+#FakeID_DBD += drvAsynSerialPort.dbd
 FakeID_DBD += pmacAsynMotorPort.dbd
 FakeID_DBD += pmacAsynMotor.dbd
 FakeID_DBD += pmacAsynIPPort.dbd
 FakeID_DBD += pmacAsynCoord.dbd
 FakeID_DBD += asSupport.dbd
-FakeID_DBD += busySupport.dbd
-FakeID_DBD += calcSupport.dbd
+#FakeID_DBD += busySupport.dbd
+#FakeID_DBD += calcSupport.dbd
 FakeID_DBD += system.dbd
 FakeID_DBD += stream.dbd
 FakeID_DBD += devIocStats.dbd
@@ -33,25 +32,19 @@ FakeID_DBD += devIocStats.dbd
 # Include dbd files from all support applications:
 #FakeID_DBD += xxx.dbd
 
-# Add all the support libraries needed by this IOC
-#FakeID_LIBS += xxx
-ifneq ($(AUTOSAVE),)
-FakeID_DBD += asSupport.dbd
-FakeID_LIBS += autosave
-endif
 
 
-FakeID_LIBS += pmacAsynMotorPort
 FakeID_LIBS += pmacAsynIPPort
 FakeID_LIBS += pmacAsynCoord
 FakeID_LIBS += motor
 FakeID_LIBS += asyn
 FakeID_LIBS += autosave
-FakeID_LIBS += busy
-FakeID_LIBS += calc
+#FakeID_LIBS += busy
+#FakeID_LIBS += calc
 FakeID_LIBS += stream
 FakeID_LIBS += devIocStats
 FakeID_LIBS += pmacAsynMotor
+FakeID_LIBS += pmacAsynMotorPort
 
 
 
