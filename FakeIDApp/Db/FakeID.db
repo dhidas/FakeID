@@ -2,14 +2,14 @@ record(ao, "$(SYS){$(DEV)}Test")
 {
     field(DESC, "My test PV")
     field(VAL, "5.0")
-    field(PREC, "6")
+    field(PREC, "2")
     field(EGU, "cookies")
     info(autosaveFields_pass0, "VAL")
 }
 
 
 
-record(motor, "$(SYS){$(DEV)-Ax:Gap}") {
+record(motor, "$(SYS){$(DEV)-Ax:Gap}-Mtr") {
   field(DTYP, "asynMotor")
   field(OUT, "@asyn(PMAC1CS2,0)")
   field(EGU, "um")
@@ -19,11 +19,10 @@ record(motor, "$(SYS){$(DEV)-Ax:Gap}") {
   field(NTM, "NO")
   #field(VELO, "100")
   #field(ACCL, "100000")
-  field(PREC, "6")
 }
 
 
-record(motor, "$(SYS){$(DEV)-Ax:Elev}") {
+record(motor, "$(SYS){$(DEV)-Ax:Elev}-Mtr") {
   field(DTYP, "asynMotor")
   field(OUT, "@asyn(PMAC1CS2,1)")
   field(EGU, "um")
@@ -33,11 +32,10 @@ record(motor, "$(SYS){$(DEV)-Ax:Elev}") {
   field(NTM, "NO")
   #field(VELO, "100")
   #field(ACCL, "100000")
-  field(PREC, "3")
 }
 
 
-record(motor, "$(SYS){$(DEV)-Ax:Taper}") {
+record(motor, "$(SYS){$(DEV)-Ax:Taper}-Mtr") {
   field(DTYP, "asynMotor")
   field(OUT, "@asyn(PMAC1CS2,2)")
   field(EGU, "um")
@@ -47,11 +45,10 @@ record(motor, "$(SYS){$(DEV)-Ax:Taper}") {
   field(NTM, "NO")
   #field(VELO, "100")
   #field(ACCL, "100000")
-  field(PREC, "3")
 }
 
 
-record(motor, "$(SYS){$(DEV)-Ax:Tilt}") {
+record(motor, "$(SYS){$(DEV)-Ax:Tilt}-Mtr") {
   field(DTYP, "asynMotor")
   field(OUT, "@asyn(PMAC1CS2,3)")
   field(EGU, "um")
@@ -61,5 +58,68 @@ record(motor, "$(SYS){$(DEV)-Ax:Tilt}") {
   field(NTM, "NO")
   #field(VELO, "100")
   #field(ACCL, "100000")
-  field(PREC, "3")
+}
+
+
+
+
+
+record(ao, "$(SYS){$(DEV)-Ax:Gap}-Mtr-SP") {
+  field(DTYP, "stream")
+  field(DESC, "Motor position setpoint")
+  field(EGU, "um")
+  field(DRVL, "5700")
+  field(DRVH, "40000")
+  field(OUT, "@pmac.proto setVar(P805) $(PORT)")
+  field(FLNK, "$(SYS){$(DEV)-Ax:Gap}-MvReq-Cmd")
+  info(autosaveFields_pass0, "VAL")
+  info(autosaveFields, "VAL")
+}
+
+record(ao, "$(SYS){$(DEV)-Ax:Elev}-Mtr-SP") {
+  field(DTYP, "stream")
+  field(DESC, "Motor position setpoint")
+  field(EGU, "um")
+  field(DRVL, "-500")
+  field(DRVH, "500")
+  field(OUT, "@pmac.proto setVar(P806) $(PORT)")
+  field(FLNK, "$(SYS){$(DEV)-Ax:Gap}-MvReq-Cmd")
+  info(autosaveFields_pass0, "VAL")
+  info(autosaveFields, "VAL")
+}
+
+record(ao, "$(SYS){$(DEV)-Ax:Taper}-Mtr-SP") {
+  field(DTYP, "stream")
+  field(DESC, "Motor position setpoint")
+  field(EGU, "um")
+  field(DRVL, "-50")
+  field(DRVH, "50")
+  field(OUT, "@pmac.proto setVar(P807) $(PORT)")
+  field(FLNK, "$(SYS){$(DEV)-Ax:Gap}-MvReq-Cmd")
+  info(autosaveFields_pass0, "VAL")
+  info(autosaveFields, "VAL")
+}
+
+record(ao, "$(SYS){$(DEV)-Ax:Tilt}-Mtr-SP") {
+  field(DTYP, "stream")
+  field(DESC, "Motor position setpoint")
+  field(EGU, "um")
+  field(DRVL, "-50")
+  field(DRVH, "50")
+  field(OUT, "@pmac.proto setVar(P808) $(PORT)")
+  field(FLNK, "$(SYS){$(DEV)-Ax:Gap}-MvReq-Cmd")
+  info(autosaveFields_pass0, "VAL")
+  info(autosaveFields, "VAL")
+}
+
+
+
+
+record(ao, "$(SYS){$(DEV)-Ax:Gap}-MvReq-Cmd") {
+  field(DESC, "Trigers PLC to start gap movement")
+  field(SCAN, "Passive")
+  field(DTYP, "stream")
+  field(VAL, "1")
+  field(OUT, "@pmac.proto setVar(P809) $(PORT)")
+  field(FLNK, "$(SYS){$(DEV)-Ax:Gap}-Mtr.MOVN.PROC")
 }

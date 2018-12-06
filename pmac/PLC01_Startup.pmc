@@ -3,6 +3,7 @@
 
 Open PLC 1 Clear
 
+
 ; Initial offsets specific to this device
 P_Mtr1_Offset = MTR1OFFSET
 P_Mtr2_Offset = MTR2OFFSET
@@ -16,16 +17,31 @@ Disable PLC 2..31
 Disable PLCC 1..31
 
 
-; set the feedrate to 100%
-CMD"&2%100"
+CMD"#1$*#2$*#3$*#4$*"
+I5111=1500 * kMilliSecond
+while(I5111 > 0) endwhile
 
-CMD"&2#1->I#2->I#3->I#4->I"
+
 
 CMD"#1j/#2j/#3j/#4j/"
 CMD"#1hmz#2hmz#3hmz#4hmz"
+
+; set the feedrate to 100%
+CMD"&2%100"
+
+ADDRESS&2
+COMMAND"DEFINE LOOKAHEAD 50,10"
+
+CMD^A
+CMD"&2 #1->I"
+CMD"&2 #2->I"
+CMD"&2 #3->I"
+CMD"&2 #4->I"
+
 Disable PLC 1
 
 Enable PLC 5
+Enable PLC 8
 Enable PLC 18
 
 Close

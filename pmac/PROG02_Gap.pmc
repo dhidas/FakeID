@@ -15,7 +15,7 @@ TS0
 TM1000
 
 FRAX(A,B,C,U)
-F(500)
+F(500 / kEncCntsPerUm)
 
 A(Q_A_KinDemandPos) B(Q_B_KinDemandPos) C(Q_C_KinDemandPos) U(Q_U_KinDemandPos)
 Dwell0

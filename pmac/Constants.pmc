@@ -1,12 +1,15 @@
 #ifndef GUARD_Constants_pmc
 #define GUARD_Constants_pmc
 
+#define kMilliSecond      8388608/I10           ; Milli-second
+#define kSecond           1000*kMilliSecond     ; Second
+
 #define kmm2um          1000
 #define kmm2nm          1000000
-#define kEncCntsPerMm   1000
-#define kEncCntsPerUm   1
+#define kEncCntsPerUm   10000
 
 
-
+#define kABORTDELAY   100*kMilliSecond          ; Motion abort delay
+#define kENABLEDELAY  50*kMilliSecond           ; Enable delay (for brake timing)
 
 #endif

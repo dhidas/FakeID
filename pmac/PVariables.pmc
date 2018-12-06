@@ -14,4 +14,13 @@
 #define P_Mtr4_Offset   P1014
 
 
+// PLC 08
+#define P_GapSetpoint       P805
+#define P_ElevSetpoint      P806
+#define P_TaperSetpoint     P807
+#define P_TiltSetpoint      P808
+#define P_GapMoveRequest    P809
+
+
+
 #endif
