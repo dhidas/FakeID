@@ -1,5 +1,11 @@
 #include "QVariables.pmc"
 
+#define Timer08 I5511
+#define M_Mtr1Brake   M114    ; Motor 1 brake
+#define M_Mtr2Brake   M214    ; Motor 2 brake
+#define M_Mtr3Brake   M314    ; Motor 3 brake
+#define M_Mtr4Brake   M414    ; Motor 4 brake
+
 &2
 #1->I
 #2->I
@@ -7,6 +13,25 @@
 #4->I
 
 Open PROG 2 Clear
+
+
+
+  if (M_Mtr1Brake = 0 or M_Mtr2Brake = 0 or M_Mtr3Brake = 0 or M_Mtr4Brake = 0)
+    M_Mtr1Brake = 1
+    M_Mtr2Brake = 1
+    M_Mtr3Brake = 1
+    M_Mtr4Brake = 1
+
+    Timer08 = kENABLEDELAY
+    While (Timer08 > 0) Wait
+  endif
+
+
+
+  if (M_Mtr1Brake = 0 or M_Mtr2Brake = 0 or M_Mtr3Brake = 0 or M_Mtr4Brake = 0)
+    return
+  endif
+
 
 LINEAR
 ABS

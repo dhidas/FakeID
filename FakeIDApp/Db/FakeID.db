@@ -8,7 +8,6 @@ record(ao, "$(SYS){$(DEV)}Test")
 }
 
 
-
 record(motor, "$(SYS){$(DEV)-Ax:Gap}-Mtr") {
   field(DTYP, "asynMotor")
   field(OUT, "@asyn(PMAC1CS2,0)")
