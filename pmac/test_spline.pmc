@@ -1,0 +1,384 @@
+#define P_XOFFSET     P200
+#define P_DSPACING    P201
+#define P_DELTABRAGG  P202
+#define P_C2XCAL      P203
+#define P_T2CAL       P204
+
+// P240..299 are reserved for spline data
+#define kPXSPLINE0    220
+#define kPYSPLINE0    240
+#define kPYPPSPLINE0  260
+
+#define P_XSPLINE0    PkPXSPLINE0   ; P-variable start index for X spline data
+#define P_YSPLINE0    PkPYSPLINE0   ; P-variable start index for YPP spline data
+#define P_YPPSPLINE0  PkPYPPSPLINE0 ; P-variable start index for YPP spline data
+
+#define M_Mtr3pos     M362  ; Bragg motor position
+#define M_Mtr3off     M364  ; Bragg motor offset
+
+#define M_Mtr5pos     M562  ; Crystal motor position
+#define M_Mtr5off     M564  ; Crystal motor offset
+
+#define ANG_OVER_EV   12.3984
+
+
+#define kNSPLINE      12
+#define kPI           3.141592653589793
+
+#define Q_X_KinPos    Q7
+
+#define Q_InvTmp_Gap  Q228
+#define Q_InvTmp_klo  Q229
+#define Q_InvTmp_khi  Q230
+#define Q_InvTmp_k    Q231
+#define Q_InvTmp_h    Q232
+#define Q_InvTmp_a    Q233
+#define Q_InvTmp_b    Q234
+#define Q_InvTmp_GAP  Q235
+
+
+
+
+#define P_DYDX0 P300
+#define P_DYDXN P301
+#define P_INDEX P302
+#define P_SIG   P303
+#define P_P     P304
+#define P_QN    P305
+#define P_UN    P306
+
+#define P_Save_iXk     Q307
+#define P_Save_iXl     Q308
+#define P_Save_iXh     Q309
+#define P_Save_iYl     Q310
+#define P_Save_iYh     Q311
+#define P_Save_iYPPl   Q312
+#define P_Save_iYPPh   Q313
+
+// P320-339 reserved for spline calculation
+#define P_U0    320
+
+
+
+// Pointers for arrays and index.  Needed because pmac does not allow P(Pxx) except for input
+M4000->L:$60DB        ; vXm     minus 1
+M4001->Y:$4FA0,0,16   ;         minus 1
+M4002->L:$60DC        ; vX      Points to address of P220 ($6000+kPXSPLINE0)
+M4003->Y:$4FA2,0,16   ;         Points to definition word of M4002
+M4004->L:$60DD        ; vXp     plus 1
+M4005->Y:$4FA4,0,16   ;         plus 1
+
+M4006->L:$60EF        ; vYm     minus 1
+M4007->Y:$4FA6,0,16   ;         minus 1
+M4008->L:$60F0        ; vY      Points to address of P240 ($6000+kPYSPLINE0)
+M4009->Y:$4FA8,0,16   ;         Points to definition word of M4008
+M4010->L:$60F1        ; vYp     plus 1
+M4011->Y:$4FAA,0,16   ;         plus 1
+
+M4012->L:$6103        ; vYPPm   minus 1
+M4013->Y:$4FAC,0,16   ;         minus 1
+M4014->L:$6104        ; vYPP    Points to address of P260 ($6000+kPYPPSPLINE0)
+M4015->Y:$4FAE,0,16   ;         Points to definition word of M4014
+M4016->L:$6105        ; vYPPp   plus 1
+M4017->Y:$4FB0,0,16   ;         plus 1
+
+M4018->L:$6117        ; vXPPm   minus 1
+M4019->Y:$4FB2,0,16   ;         minus 1
+M4020->L:$6118        ; vXPP    Points to address of P280 ($6000+kPXPPSPLINE0)
+M4021->Y:$4FB4,0,16   ;         Points to definition word of M4020
+M4022->L:$6119        ; vXPPp   plus 1
+M4023->Y:$4FB6,0,16   ;         plus 1
+
+M4024->L:$613F        ; vU0m    minus 1
+M4025->Y:$4FB8,0,16   ;         minus 1
+M4026->L:$6140        ; vU0     Points to address of P320
+M4027->Y:$4FBA,0,16   ;         Points to definition word of M4026
+
+// For kinematics
+M4028->L:$60DC        ; vXk     Points to address of P220
+M4029->Y:$4FBC,0,16   ;         Points to definition word of M4028
+M4030->L:$60DC        ; vXl     Points to address of P220
+M4031->Y:$4FBE,0,16   ;         Points to definition word of M4030
+M4032->L:$60DC        ; vXh     Points to address of P220
+M4033->Y:$4FC0,0,16   ;         Points to definition word of M4032
+M4034->L:$60F0        ; vYl     Points to address of P240
+M4035->Y:$4FC2,0,16   ;         Points to definition word of M4034
+M4036->L:$60F0        ; vYh     Points to address of P240
+M4037->Y:$4FC4,0,16   ;         Points to definition word of M4036
+M4038->L:$6104        ; vYPPl   Points to address of P260
+M4039->Y:$4FC6,0,16   ;         Points to definition word of M4038
+M4040->L:$6104        ; vYPPh   Points to address of P260
+M4041->Y:$4FC8,0,16   ;         Points to definition word of M4040
+
+// For kinematics
+#define vXk     M4028    
+#define iXk     M4029    
+#define vXl     M4030    
+#define iXl     M4031    
+#define vXh     M4032    
+#define iXh     M4033    
+#define vYl     M4034    
+#define iYl     M4035    
+#define vYh     M4036    
+#define iYh     M4037    
+#define vYPPl   M4038    
+#define iYPPl   M4039    
+#define vYPPh   M4040    
+#define iYPPh   M4041    
+
+
+
+
+// Vectors
+#define vXm     M4000
+#define vX      M4002
+#define vXp     M4004
+#define vYm     M4006
+#define vY      M4008
+#define vYp     M4010
+#define vYPPm   M4012
+#define vYPP    M4014
+#define vYPPp   M4016
+#define vXPPm   M4018
+#define vXPP    M4020
+#define vXPPp   M4022
+#define vU0m    M4024
+#define vU0     M4026
+
+// Vector indexes
+#define iXm       M4001
+#define iX        M4003
+#define iXp       M4005
+#define iYm       M4007
+#define iY        M4009
+#define iYp       M4011
+#define iYPPm     M4013
+#define iYPP      M4015
+#define iYPPp     M4017
+#define iXPPm     M4019
+#define iXPP      M4021
+#define iXPPp     M4023
+#define iU0m      M4025
+#define iU0       M4027
+
+
+
+
+
+
+
+end gat del gat
+undefine all
+
+i5313=10
+i5320=50
+i5350=1
+
+&3 Open FORWARD Clear
+
+Q_X_KinPos = P1 / 2  ; for testing spline
+
+Close
+
+
+
+&3 Open INVERSE Clear
+    P_Save_iXk   = iXk     
+    P_Save_iXl   = iXl     
+    P_Save_iXh   = iXh     
+    P_Save_iYl   = iYl     
+    P_Save_iYh   = iYh     
+    P_Save_iYPPl = iYPPl   
+    P_Save_iYPPh = iYPPh   
+
+
+    // Here Q_X_KinPos = 'x' is energy
+    Q_InvTmp_klo = 0
+    Q_InvTmp_khi = kNSPLINE - 1
+
+    while (Q_InvTmp_khi - Q_InvTmp_klo > 1)
+        Q_InvTmp_k = INT((Q_InvTmp_khi + Q_InvTmp_klo)/2)
+        iXk = P_Save_iXk + Q_InvTmp_k
+        if (vXk > Q_X_KinPos)
+            Q_InvTmp_khi = Q_InvTmp_k
+        else
+            Q_InvTmp_klo = Q_InvTmp_k
+        endif
+    endw
+
+    iXl = P_Save_iXl + Q_InvTmp_klo
+    iXh = P_Save_iXh + Q_InvTmp_khi
+    iYl = P_Save_iYl + Q_InvTmp_klo
+    iYh = P_Save_iYh + Q_InvTmp_khi
+    iYPPl = P_Save_iYPPl + Q_InvTmp_klo
+    iYPPh = P_Save_iYPPh + Q_InvTmp_khi
+
+    Q_InvTmp_h = vXh - vXl
+    Q_InvTmp_a = (vXh - Q_X_KinPos) / Q_InvTmp_h
+    Q_InvTmp_b = (Q_X_KinPos - vXl) / Q_InvTmp_h
+
+    Q_InvTmp_GAP = Q_InvTmp_a * vYl + Q_InvTmp_b * vYh + ((Q_InvTmp_a * Q_InvTmp_a * Q_InvTmp_a - Q_InvTmp_a) * vYPPl + (Q_InvTmp_b * Q_InvTmp_b * Q_InvTmp_b - Q_InvTmp_b) * vYPPh) * (Q_InvTmp_h * Q_InvTmp_h) / 6.
+
+    P1 = Q_InvTmp_GAP    ; for testing spline
+
+
+    // Restore original pointers
+    iXk   = P_Save_iXk  
+    iXl   = P_Save_iXl  
+    iXh   = P_Save_iXh  
+    iYl   = P_Save_iYl  
+    iYh   = P_Save_iYh  
+    iYPPl = P_Save_iYPPl
+    iYPPh = P_Save_iYPPh
+
+Close
+
+
+
+
+Open PLC 2 Clear
+
+ADDRESS &3
+
+I15 = 1 ; Cmopute in radian
+Q77 = ANG_OVER_EV / (2 * P_DSPACING *SIN((M_Mtr3pos/(I308*32) + P_DELTABRAGG) *kPI/180))
+
+Close
+
+
+
+
+
+
+
+
+// Spline test date
+P220 = 0
+P221 = 1
+P222 = 2
+P223 = 3
+P224 = 4
+P225 = 5
+P226 = 6
+P227 = 7
+P228 = 8
+P229 = 9
+P230 = 10
+P231 = 11
+P240 = 0
+P241 = 2
+P242 = 4
+P243 = 6
+P244 = 8
+P245 = 10
+P246 = 12
+P247 = 14
+P248 = 16
+P249 = 18
+P250 = 20
+P251 = 22
+
+;P240 = 0
+;P241 = 1
+;P242 = 4
+;P243 = 9
+;P244 = 16
+;P245 = 25
+;P246 = 36
+;P247 = 49
+;P248 = 64
+;P249 = 81
+;P250 = 100
+;P251 = 121
+
+
+Open PLC 3 Clear
+    // Reset counters (pointers)
+
+    P_DYDX0 = (vYp - vY) / (vXp - vX)
+
+    vYPP = -0.5
+    vU0 = (3. / (vXp - vX)) * ((vYp - vY) / (vXp - vX) - P_DYDX0)
+
+
+    P_INDEX = 1
+    while (P_INDEX < kNSPLINE - 1)
+        iXm   = iXm   + 1
+        iX    = iX    + 1
+        iXp   = iXp   + 1
+        iYm   = iYm   + 1
+        iY    = iY    + 1
+        iYp   = iYp   + 1
+        iYPPm = iYPPm + 1
+        iYPP  = iYPP  + 1
+        iYPPp = iYPPp + 1
+        iXPPm = iXPPm + 1
+        iXPP  = iXPP  + 1
+        iXPPp = iXPPp + 1
+        iU0m  = iU0m  + 1
+        iU0   = iU0   + 1
+
+
+        P_SIG = (vX - vXm) / (vXp - vXm)
+        P_P = P_SIG * vYPPm + 2
+        vYPP = (P_SIG - 1.) / P_P
+        vU0 = (vYp - vY) / (vXp - vX) - (vY - vYm) / (vX - vXm)
+        vU0 = (6. * vU0 / (vXp - vXm) - P_SIG * vU0m) / P_P
+        P_INDEX = P_INDEX + 1
+    endw
+
+    // Here P_INDEX is kNSPLLINE-1, and vectors are i P_INDEX-1 (N-2)
+
+    P_DYDXN = (vYp - vY) / (vXp - vX)
+
+
+    P_QN = 0.5
+    P_UN = (3. / (vXp - vX)) * (P_DYDXN - (vYp - vY) / (vXp - vX))
+
+    vYPPp = (P_UN - P_QN * vU0) / (P_QN * vYPP + 1)
+
+    // Reset index here
+    P_INDEX = kNSPLINE - 2
+    while (P_INDEX > -1)
+        vYPP = vYPP * vYPPp + vU0
+
+        // dec index here
+        if (P_INDEX > 0)
+            iXm   = iXm   - 1
+            iX    = iX    - 1
+            iXp   = iXp   - 1
+            iYm   = iYm   - 1
+            iY    = iY    - 1
+            iYp   = iYp   - 1
+            iYPPm = iYPPm - 1
+            iYPP  = iYPP  - 1
+            iYPPp = iYPPp - 1
+            iXPPm = iXPPm - 1
+            iXPP  = iXPP  - 1
+            iXPPp = iXPPp - 1
+            iU0m  = iU0m  - 1
+            iU0   = iU0   - 1
+        endif
+
+        P_INDEX = P_INDEX - 1
+    endw
+
+    disable PLC 3
+Close
+
+
+&3 #1->I
+Open PROG 3 Clear
+
+TA500
+TM2000
+
+X(50)
+DWELL 4000
+X(70)
+DWELL 4000
+X(0)
+
+Close
+
+
