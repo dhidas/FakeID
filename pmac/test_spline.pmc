@@ -64,19 +64,17 @@
 
 
 
-
-#define P_DYDX0 P300
-#define P_DXDY0 P301
-#define P_DYDXN P302
-#define P_DXDYN P303
-#define P_INDEX P304
-#define P_SIG   P305
-#define P_P     P306
-#define P_QN    P307
-#define P_UN    P308
-
-
-
+#define P_SplineOK      P300
+#define P_SplineERROR   P301
+#define P_DYDX0         P302
+#define P_DXDY0         P303
+#define P_DYDXN         P304
+#define P_DXDYN         P305
+#define P_INDEX         P306
+#define P_SIG           P307
+#define P_P             P308
+#define P_QN            P309
+#define P_UN            P310
 // P320-339 reserved for spline calculation
 #define P_U0    320
 
@@ -388,8 +386,40 @@ P250 = 100
 P251 = 121
 
 
+#define kMINGAP       0
+#define kMAXGAP     500
+#define kMINENERGY    0
+#define kMAXENERGY   11
+
+
 Open PLC 3 Clear
-    // Reset counters (pointers)
+
+    // Start with spline not OK and no ERROR
+    P_SplineOK = 0
+    P_SplineERROR = 0
+
+    // Check both X and Y are monotonic increasing 1-1 data
+    P_INDEX = 0
+    while (P_INDEX < kNSPLINE - 1)
+        if (vXp < vX) or (vYp < vY)
+            P_SplineOK = 0
+            P_SplineERROR = 1
+        endif
+        iX      = iX      + 1
+        iXp     = iXp     + 1
+        iY      = iY      + 1
+        iYp     = iYp     + 1
+        P_INDEX = P_INDEX + 1
+    endw
+    iX  = iX  - kNSPLINE + 1
+    iXp = iXp - kNSPLINE + 1
+    iY  = iY  - kNSPLINE + 1
+    iYp = iYp - kNSPLINE + 1
+
+    // Force out here if there is an error (PLC exit only at endw)
+    while (P_SplineERROR = 1)
+      disable plc 3
+    endw
 
     P_DYDX0 = (vYp - vY) / (vXp - vX)
     vYPP = -0.5
@@ -517,11 +547,14 @@ Open PLC 3 Clear
         P_INDEX = P_INDEX - 1
     endw
 
+    if (P_SplineERROR = 0)
+        P_SplineOK = 1
+    endif
     disable PLC 3
 Close
 
 
-&3 #1->I
+&3 #1->I #2->I #3->I #4->I
 Open PROG 3 Clear
 
 TA500
