@@ -27,14 +27,40 @@
 
 #define Q_X_KinPos    Q7
 
-#define Q_InvTmp_GAP  Q228
-#define Q_InvTmp_klo  Q229
-#define Q_InvTmp_khi  Q230
-#define Q_InvTmp_k    Q231
-#define Q_InvTmp_h    Q232
-#define Q_InvTmp_a    Q233
-#define Q_InvTmp_b    Q234
-#define Q_InvTmp_Energy  Q235
+
+
+
+#define Q_FwdTmp_GAP      Q128
+#define Q_FwdTmp_klo      Q129
+#define Q_FwdTmp_khi      Q130
+#define Q_FwdTmp_k        Q131
+#define Q_FwdTmp_h        Q132
+#define Q_FwdTmp_a        Q133
+#define Q_FwdTmp_b        Q134
+#define Q_FwdTmp_Energy   Q135
+#define Q_FwdSave_iYfk    Q136
+#define Q_FwdSave_iXfl    Q137
+#define Q_FwdSave_iXfh    Q138
+#define Q_FwdSave_iYfl    Q139
+#define Q_FwdSave_iYfh    Q140
+#define Q_FwdSave_iXPPfl  Q141
+#define Q_FwdSave_iXPPfh  Q142
+
+#define Q_InvTmp_GAP      Q228
+#define Q_InvTmp_klo      Q229
+#define Q_InvTmp_khi      Q230
+#define Q_InvTmp_k        Q231
+#define Q_InvTmp_h        Q232
+#define Q_InvTmp_a        Q233
+#define Q_InvTmp_b        Q234
+#define Q_InvTmp_Energy   Q235
+#define Q_InvSave_iXik    Q236
+#define Q_InvSave_iXil    Q237
+#define Q_InvSave_iXih    Q238
+#define Q_InvSave_iYil    Q239
+#define Q_InvSave_iYih    Q240
+#define Q_InvSave_iYPPil  Q241
+#define Q_InvSave_iYPPih  Q242
 
 
 
@@ -49,21 +75,7 @@
 #define P_QN    P307
 #define P_UN    P308
 
-#define Q_Save_iXik     Q307
-#define Q_Save_iXil     Q308
-#define Q_Save_iXih     Q309
-#define Q_Save_iYil     Q310
-#define Q_Save_iYih     Q311
-#define Q_Save_iYPPil   Q312
-#define Q_Save_iYPPih   Q313
 
-#define Q_Save_iYfk     Q314
-#define Q_Save_iXfl     Q315
-#define Q_Save_iXfh     Q316
-#define Q_Save_iYfl     Q317
-#define Q_Save_iYfh     Q318
-#define Q_Save_iXPPfl   Q319
-#define Q_Save_iXPPfh   Q320
 
 // P320-339 reserved for spline calculation
 #define P_U0    320
@@ -220,81 +232,70 @@ i5350=1
 
 &3 Open FORWARD Clear
 
-;;;;;;Q_X_KinPos = sqrt(P1)  ; for testing spline
+    Q_FwdSave_iYfk   = iYfk     
+    Q_FwdSave_iXfl   = iXfl     
+    Q_FwdSave_iXfh   = iXfh     
+    Q_FwdSave_iYfl   = iYfl     
+    Q_FwdSave_iYfh   = iYfh     
+    Q_FwdSave_iXPPfl = iXPPfl   
+    Q_FwdSave_iXPPfh = iXPPfh   
 
+    Q_FwdTmp_klo = 0
+    Q_FwdTmp_khi = kNSPLINE - 1
 
-    Q_Save_iYfk   = iYfk     
-    Q_Save_iXfl   = iXfl     
-    Q_Save_iXfh   = iXfh     
-    Q_Save_iYfl   = iYfl     
-    Q_Save_iYfh   = iYfh     
-    Q_Save_iXPPfl = iXPPfl   
-    Q_Save_iXPPfh = iXPPfh   
-
-
-    // Here Q_X_KinPos = 'x' is energy
-    Q_InvTmp_klo = 0
-    Q_InvTmp_khi = kNSPLINE - 1
-
-    while (Q_InvTmp_khi - Q_InvTmp_klo > 1)
-        Q_InvTmp_k = INT((Q_InvTmp_khi + Q_InvTmp_klo)/2)
-        iYfk = Q_Save_iYfk + Q_InvTmp_k
+    while (Q_FwdTmp_khi - Q_FwdTmp_klo > 1)
+        Q_FwdTmp_k = INT((Q_FwdTmp_khi + Q_FwdTmp_klo)/2)
+        iYfk = Q_FwdSave_iYfk + Q_FwdTmp_k
         if (vYfk > P1)
-            Q_InvTmp_khi = Q_InvTmp_k
+            Q_FwdTmp_khi = Q_FwdTmp_k
         else
-            Q_InvTmp_klo = Q_InvTmp_k
+            Q_FwdTmp_klo = Q_FwdTmp_k
         endif
     endw
 
-    iYfl = Q_Save_iYfl + Q_InvTmp_klo
-    iYfh = Q_Save_iYfh + Q_InvTmp_khi
-    iXfl = Q_Save_iXfl + Q_InvTmp_klo
-    iXfh = Q_Save_iXfh + Q_InvTmp_khi
-    iXPPfl = Q_Save_iXPPfl + Q_InvTmp_klo
-    iXPPfh = Q_Save_iXPPfh + Q_InvTmp_khi
+    iYfl = Q_FwdSave_iYfl + Q_FwdTmp_klo
+    iYfh = Q_FwdSave_iYfh + Q_FwdTmp_khi
+    iXfl = Q_FwdSave_iXfl + Q_FwdTmp_klo
+    iXfh = Q_FwdSave_iXfh + Q_FwdTmp_khi
+    iXPPfl = Q_FwdSave_iXPPfl + Q_FwdTmp_klo
+    iXPPfh = Q_FwdSave_iXPPfh + Q_FwdTmp_khi
 
-    Q_InvTmp_h = vYfh - vYfl
-    Q_InvTmp_a = (vYfh - P1) / Q_InvTmp_h
-    Q_InvTmp_b = (P1 - vYfl) / Q_InvTmp_h
+    Q_FwdTmp_h = vYfh - vYfl
+    Q_FwdTmp_a = (vYfh - P1) / Q_FwdTmp_h
+    Q_FwdTmp_b = (P1 - vYfl) / Q_FwdTmp_h
 
-    Q_InvTmp_Energy = Q_InvTmp_a * vXfl + Q_InvTmp_b * vXfh + ((Q_InvTmp_a * Q_InvTmp_a * Q_InvTmp_a - Q_InvTmp_a) * vXPPfl + (Q_InvTmp_b * Q_InvTmp_b * Q_InvTmp_b - Q_InvTmp_b) * vXPPfh) * (Q_InvTmp_h * Q_InvTmp_h) / 6.
+    Q_FwdTmp_Energy = Q_FwdTmp_a * vXfl + Q_FwdTmp_b * vXfh + ((Q_FwdTmp_a * Q_FwdTmp_a * Q_FwdTmp_a - Q_FwdTmp_a) * vXPPfl + (Q_FwdTmp_b * Q_FwdTmp_b * Q_FwdTmp_b - Q_FwdTmp_b) * vXPPfh) * (Q_FwdTmp_h * Q_FwdTmp_h) / 6.
 
-    Q_X_KinPos = Q_InvTmp_Energy    ; for testing spline
-
+    Q_X_KinPos = Q_FwdTmp_Energy    ; for testing spline
 
     // Restore original pointers
-    iYfk   = Q_Save_iYfk  
-    iXfl   = Q_Save_iXfl  
-    iXfh   = Q_Save_iXfh  
-    iYfl   = Q_Save_iYfl  
-    iYfh   = Q_Save_iYfh  
-    iXPPfl = Q_Save_iXPPfl
-    iXPPfh = Q_Save_iXPPfh
-
-
-
+    iYfk   = Q_FwdSave_iYfk  
+    iXfl   = Q_FwdSave_iXfl  
+    iXfh   = Q_FwdSave_iXfh  
+    iYfl   = Q_FwdSave_iYfl  
+    iYfh   = Q_FwdSave_iYfh  
+    iXPPfl = Q_FwdSave_iXPPfl
+    iXPPfh = Q_FwdSave_iXPPfh
 
 Close
 
 
 
 &3 Open INVERSE Clear
-    Q_Save_iXik   = iXik     
-    Q_Save_iXil   = iXil     
-    Q_Save_iXih   = iXih     
-    Q_Save_iYil   = iYil     
-    Q_Save_iYih   = iYih     
-    Q_Save_iYPPil = iYPPil   
-    Q_Save_iYPPih = iYPPih   
+    Q_InvSave_iXik   = iXik     
+    Q_InvSave_iXil   = iXil     
+    Q_InvSave_iXih   = iXih     
+    Q_InvSave_iYil   = iYil     
+    Q_InvSave_iYih   = iYih     
+    Q_InvSave_iYPPil = iYPPil   
+    Q_InvSave_iYPPih = iYPPih   
 
-
-    // Here Q_X_KinPos = 'x' is energy
     Q_InvTmp_klo = 0
     Q_InvTmp_khi = kNSPLINE - 1
 
     while (Q_InvTmp_khi - Q_InvTmp_klo > 1)
         Q_InvTmp_k = INT((Q_InvTmp_khi + Q_InvTmp_klo)/2)
-        iXik = Q_Save_iXik + Q_InvTmp_k
+        iXik = Q_InvSave_iXik + Q_InvTmp_k
         if (vXik > Q_X_KinPos)
             Q_InvTmp_khi = Q_InvTmp_k
         else
@@ -302,12 +303,12 @@ Close
         endif
     endw
 
-    iXil = Q_Save_iXil + Q_InvTmp_klo
-    iXih = Q_Save_iXih + Q_InvTmp_khi
-    iYil = Q_Save_iYil + Q_InvTmp_klo
-    iYih = Q_Save_iYih + Q_InvTmp_khi
-    iYPPil = Q_Save_iYPPil + Q_InvTmp_klo
-    iYPPih = Q_Save_iYPPih + Q_InvTmp_khi
+    iXil = Q_InvSave_iXil + Q_InvTmp_klo
+    iXih = Q_InvSave_iXih + Q_InvTmp_khi
+    iYil = Q_InvSave_iYil + Q_InvTmp_klo
+    iYih = Q_InvSave_iYih + Q_InvTmp_khi
+    iYPPil = Q_InvSave_iYPPil + Q_InvTmp_klo
+    iYPPih = Q_InvSave_iYPPih + Q_InvTmp_khi
 
     Q_InvTmp_h = vXih - vXil
     Q_InvTmp_a = (vXih - Q_X_KinPos) / Q_InvTmp_h
@@ -317,15 +318,14 @@ Close
 
     P1 = Q_InvTmp_GAP    ; for testing spline
 
-
     // Restore original pointers
-    iXik   = Q_Save_iXik  
-    iXil   = Q_Save_iXil  
-    iXih   = Q_Save_iXih  
-    iYil   = Q_Save_iYil  
-    iYih   = Q_Save_iYih  
-    iYPPil = Q_Save_iYPPil
-    iYPPih = Q_Save_iYPPih
+    iXik   = Q_InvSave_iXik  
+    iXil   = Q_InvSave_iXil  
+    iXih   = Q_InvSave_iXih  
+    iYil   = Q_InvSave_iYil  
+    iYih   = Q_InvSave_iYih  
+    iYPPil = Q_InvSave_iYPPil
+    iYPPih = Q_InvSave_iYPPih
 
 Close
 
@@ -455,21 +455,6 @@ Open PLC 3 Clear
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     P_DXDY0 = (vXp - vX) / (vYp - vY)
     vXPP = -0.5
     vU0 = (3. / (vYp - vY)) * ((vXp - vX) / (vYp - vY) - P_DXDY0)
@@ -531,11 +516,6 @@ Open PLC 3 Clear
 
         P_INDEX = P_INDEX - 1
     endw
-
-
-
-
-
 
     disable PLC 3
 Close
