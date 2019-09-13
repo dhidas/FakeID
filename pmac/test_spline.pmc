@@ -1,3 +1,20 @@
+#define kEncCntsPerUm 1
+#define kMINGAP       0
+#define kMAXGAP     500
+#define kMINENERGY    0
+#define kMAXENERGY   11
+#define kEncCtsPerDeg 1000
+
+
+#define P_Mtr2_KinPos       P2
+#define P_Mtr3_KinPos       P3
+#define P_Mtr4_KinPos       P4
+#define P_Mtr5_KinPos       P5
+#define P_Mtr6_KinPos       P6
+#define P_Mtr7_KinPos       P7
+
+
+
 #define P_XOFFSET     P200
 #define P_DSPACING    P201
 #define P_DELTABRAGG  P202
@@ -13,11 +30,11 @@
 #define P_YSPLINE0    PkPYSPLINE0   ; P-variable start index for YPP spline data
 #define P_YPPSPLINE0  PkPYPPSPLINE0 ; P-variable start index for YPP spline data
 
-#define M_Mtr3pos     M362  ; Bragg motor position
-#define M_Mtr3off     M364  ; Bragg motor offset
+#define M_Mtr6pos     M662  ; Bragg motor position
+#define M_Mtr6off     M664  ; Bragg motor offset
 
-#define M_Mtr5pos     M562  ; Crystal motor position
-#define M_Mtr5off     M564  ; Crystal motor offset
+#define M_Mtr7pos     M762  ; Crystal motor position
+#define M_Mtr7off     M764  ; Crystal motor offset
 
 #define ANG_OVER_EV   12.3984
 
@@ -25,28 +42,40 @@
 #define kNSPLINE      12
 #define kPI           3.141592653589793
 
-#define Q_X_KinPos    Q7
+
+;#define Q_A_Gap_KinPos      Q1
+#define Q_B_Ele_KinPos        Q2
+#define Q_C_Tap_KinPos        Q3
+#define Q_U_Tlt_KinPos        Q4
+#define Q_X_Energy_KinPos     Q7
+#define Q_Y_Subtract_KinPos   Q8
 
 
 
 
-#define Q_FwdTmp_GAP      Q128
+#define Q_FwdTmp_Gap      Q128
 #define Q_FwdTmp_klo      Q129
 #define Q_FwdTmp_khi      Q130
 #define Q_FwdTmp_k        Q131
 #define Q_FwdTmp_h        Q132
 #define Q_FwdTmp_a        Q133
 #define Q_FwdTmp_b        Q134
-#define Q_FwdTmp_Energy   Q135
-#define Q_FwdSave_iYfk    Q136
-#define Q_FwdSave_iXfl    Q137
-#define Q_FwdSave_iXfh    Q138
-#define Q_FwdSave_iYfl    Q139
-#define Q_FwdSave_iYfh    Q140
-#define Q_FwdSave_iXPPfl  Q141
-#define Q_FwdSave_iXPPfh  Q142
+#define Q_FwdTmp_EnGap    Q135
+#define Q_FwdTmp_EnBragg  Q136
+#define Q_FwdSave_iYfk    Q137
+#define Q_FwdSave_iXfl    Q138
+#define Q_FwdSave_iXfh    Q139
+#define Q_FwdSave_iYfl    Q140
+#define Q_FwdSave_iYfh    Q141
+#define Q_FwdSave_iXPPfl  Q142
+#define Q_FwdSave_iXPPfh  Q143
+#define Q_Fwd_Mtr2Tmp     Q144
+#define Q_Fwd_Mtr3Tmp     Q145
+#define Q_Fwd_Mtr4Tmp     Q146
+#define Q_Fwd_Mtr5Tmp     Q147
 
-#define Q_InvTmp_GAP      Q228
+
+#define Q_InvTmp_Gap      Q228
 #define Q_InvTmp_klo      Q229
 #define Q_InvTmp_khi      Q230
 #define Q_InvTmp_k        Q231
@@ -61,6 +90,10 @@
 #define Q_InvSave_iYih    Q240
 #define Q_InvSave_iYPPil  Q241
 #define Q_InvSave_iYPPih  Q242
+#define Q_Inv_Gap_Tmp     Q243
+#define Q_Inv_Ele_Tmp     Q244
+#define Q_Inv_Tap_Tmp     Q245
+#define Q_Inv_Tlt_Tmp     Q246
 
 
 
@@ -137,7 +170,7 @@ M4044->L:$60DC        ; vXfl    Points to address of P220
 M4045->Y:$4FCC,0,16   ;         Points to definition word of M4044
 M4046->L:$60DC        ; vXfh    Points to address of P220
 M4047->Y:$4FCE,0,16   ;         Points to definition word of M4046
-M4048->L:$60F0        ; vYil    Points to address of P240
+M4048->L:$60F0        ; vYfl    Points to address of P240
 M4049->Y:$4FD0,0,16   ;         Points to definition word of M4048
 M4050->L:$60F0        ; vYfh    Points to address of P240
 M4051->Y:$4FD2,0,16   ;         Points to definition word of M4050
@@ -145,6 +178,22 @@ M4052->L:$6118        ; vXPPfl  Points to address of P280
 M4053->Y:$4FD4,0,16   ;         Points to definition word of M4052
 M4054->L:$6118        ; vXPPfh  Points to address of P280
 M4055->Y:$4FD6,0,16   ;         Points to definition word of M4054
+
+// For position reporting PLC
+M4056->L:$60F0        ; vYrk    Points to address of P240
+M4057->Y:$4FD8,0,16   ;         Points to definition word of M4056
+M4058->L:$60DC        ; vXrl    Points to address of P220
+M4059->Y:$4FDA,0,16   ;         Points to definition word of M4058
+M4060->L:$60DC        ; vXrh    Points to address of P220
+M4061->Y:$4FDC,0,16   ;         Points to definition word of M4060
+M4062->L:$60F0        ; vYrl    Points to address of P240
+M4063->Y:$4FDE,0,16   ;         Points to definition word of M4062
+M4064->L:$60F0        ; vYrh    Points to address of P240
+M4065->Y:$4FE0,0,16   ;         Points to definition word of M4064
+M4066->L:$6118        ; vXPPrl  Points to address of P280
+M4067->Y:$4FE2,0,16   ;         Points to definition word of M4066
+M4068->L:$6118        ; vXPPrh  Points to address of P280
+M4069->Y:$4FE4,0,16   ;         Points to definition word of M4068
 
 
 
@@ -180,6 +229,21 @@ M4055->Y:$4FD6,0,16   ;         Points to definition word of M4054
 #define vXPPfh   M4054    
 #define iXPPfh   M4055    
 
+// For position reoprting
+#define vYrk     M4056    
+#define iYrk     M4057    
+#define vXrl     M4058    
+#define iXrl     M4059    
+#define vXrh     M4060    
+#define iXrh     M4061    
+#define vYrl     M4062    
+#define iYrl     M4063    
+#define vYrh     M4064    
+#define iYrh     M4065    
+#define vXPPrl   M4066    
+#define iXPPrl   M4067    
+#define vXPPrh   M4068    
+#define iXPPrh   M4069    
 
 
 
@@ -228,6 +292,17 @@ i5313=10
 i5320=50
 i5350=1
 
+
+// Kinematic positions are:
+//   A - unused
+//   B - Elevation
+//   C - Taper
+//   U - Tilt
+//   X - Energy
+//   Y - Energy Subtraction (typically zero)
+
+
+
 &3 Open FORWARD Clear
 
     Q_FwdSave_iYfk   = iYfk     
@@ -238,13 +313,24 @@ i5350=1
     Q_FwdSave_iXPPfl = iXPPfl   
     Q_FwdSave_iXPPfh = iXPPfh   
 
+
+    Q_Fwd_Mtr2Tmp = (P_Mtr2_KinPos) / kEncCntsPerUm
+    Q_Fwd_Mtr3Tmp = (P_Mtr3_KinPos) / kEncCntsPerUm
+    Q_Fwd_Mtr4Tmp = (P_Mtr4_KinPos) / kEncCntsPerUm
+    Q_Fwd_Mtr5Tmp = (P_Mtr5_KinPos) / kEncCntsPerUm
+    Q_FwdTmp_Gap   = (Q_Fwd_Mtr2Tmp + Q_Fwd_Mtr3Tmp + Q_Fwd_Mtr4Tmp + Q_Fwd_Mtr5Tmp)/2  // not an axis: GAP
+    Q_B_Ele_KinPos = (Q_Fwd_Mtr2Tmp + Q_Fwd_Mtr3Tmp - Q_Fwd_Mtr4Tmp - Q_Fwd_Mtr5Tmp)/4  // Q3 = B axis: CENTER OFFSET
+    Q_C_Tap_KinPos =  Q_Fwd_Mtr2Tmp + Q_Fwd_Mtr4Tmp - Q_Fwd_Mtr3Tmp - Q_Fwd_Mtr5Tmp     // Q4 = C axis: TAPER
+    Q_U_Tlt_KinPos = (Q_Fwd_Mtr2Tmp - Q_Fwd_Mtr3Tmp - Q_Fwd_Mtr4Tmp + Q_Fwd_Mtr5Tmp)/2  // Q5 = U axis: TILT
+
+
     Q_FwdTmp_klo = 0
     Q_FwdTmp_khi = kNSPLINE - 1
 
     while (Q_FwdTmp_khi - Q_FwdTmp_klo > 1)
         Q_FwdTmp_k = INT((Q_FwdTmp_khi + Q_FwdTmp_klo)/2)
         iYfk = Q_FwdSave_iYfk + Q_FwdTmp_k
-        if (vYfk > P1)
+        if (vYfk > Q_FwdTmp_Gap)
             Q_FwdTmp_khi = Q_FwdTmp_k
         else
             Q_FwdTmp_klo = Q_FwdTmp_k
@@ -259,12 +345,15 @@ i5350=1
     iXPPfh = Q_FwdSave_iXPPfh + Q_FwdTmp_khi
 
     Q_FwdTmp_h = vYfh - vYfl
-    Q_FwdTmp_a = (vYfh - P1) / Q_FwdTmp_h
-    Q_FwdTmp_b = (P1 - vYfl) / Q_FwdTmp_h
+    Q_FwdTmp_a = (vYfh - Q_FwdTmp_Gap) / Q_FwdTmp_h
+    Q_FwdTmp_b = (Q_FwdTmp_Gap - vYfl) / Q_FwdTmp_h
 
-    Q_FwdTmp_Energy = Q_FwdTmp_a * vXfl + Q_FwdTmp_b * vXfh + ((Q_FwdTmp_a * Q_FwdTmp_a * Q_FwdTmp_a - Q_FwdTmp_a) * vXPPfl + (Q_FwdTmp_b * Q_FwdTmp_b * Q_FwdTmp_b - Q_FwdTmp_b) * vXPPfh) * (Q_FwdTmp_h * Q_FwdTmp_h) / 6.
+    Q_FwdTmp_EnGap = Q_FwdTmp_a * vXfl + Q_FwdTmp_b * vXfh + ((Q_FwdTmp_a * Q_FwdTmp_a * Q_FwdTmp_a - Q_FwdTmp_a) * vXPPfl + (Q_FwdTmp_b * Q_FwdTmp_b * Q_FwdTmp_b - Q_FwdTmp_b) * vXPPfh) * (Q_FwdTmp_h * Q_FwdTmp_h) / 6.
 
-    Q_X_KinPos = Q_FwdTmp_Energy    ; for testing spline
+    I15 = 1 ; Cmopute in radian
+    Q_FwdTmp_EnBragg = ANG_OVER_EV / (2 * P_DSPACING *SIN((M_Mtr6pos/kEncCtsPerDeg/(I608*32) + P_DELTABRAGG) *kPI/180))
+
+    Q_X_Energy_KinPos = Q_FwdTmp_EnGap
 
     // Restore original pointers
     iYfk   = Q_FwdSave_iYfk  
@@ -288,13 +377,14 @@ Close
     Q_InvSave_iYPPil = iYPPil   
     Q_InvSave_iYPPih = iYPPih   
 
+
     Q_InvTmp_klo = 0
     Q_InvTmp_khi = kNSPLINE - 1
 
     while (Q_InvTmp_khi - Q_InvTmp_klo > 1)
         Q_InvTmp_k = INT((Q_InvTmp_khi + Q_InvTmp_klo)/2)
         iXik = Q_InvSave_iXik + Q_InvTmp_k
-        if (vXik > Q_X_KinPos)
+        if (vXik > Q_X_Energy_KinPos)
             Q_InvTmp_khi = Q_InvTmp_k
         else
             Q_InvTmp_klo = Q_InvTmp_k
@@ -309,12 +399,31 @@ Close
     iYPPih = Q_InvSave_iYPPih + Q_InvTmp_khi
 
     Q_InvTmp_h = vXih - vXil
-    Q_InvTmp_a = (vXih - Q_X_KinPos) / Q_InvTmp_h
-    Q_InvTmp_b = (Q_X_KinPos - vXil) / Q_InvTmp_h
+    Q_InvTmp_a = (vXih - Q_X_Energy_KinPos) / Q_InvTmp_h
+    Q_InvTmp_b = (Q_X_Energy_KinPos - vXil) / Q_InvTmp_h
 
-    Q_InvTmp_GAP = Q_InvTmp_a * vYil + Q_InvTmp_b * vYih + ((Q_InvTmp_a * Q_InvTmp_a * Q_InvTmp_a - Q_InvTmp_a) * vYPPil + (Q_InvTmp_b * Q_InvTmp_b * Q_InvTmp_b - Q_InvTmp_b) * vYPPih) * (Q_InvTmp_h * Q_InvTmp_h) / 6.
+    Q_InvTmp_Gap = Q_InvTmp_a * vYil + Q_InvTmp_b * vYih + ((Q_InvTmp_a * Q_InvTmp_a * Q_InvTmp_a - Q_InvTmp_a) * vYPPil + (Q_InvTmp_b * Q_InvTmp_b * Q_InvTmp_b - Q_InvTmp_b) * vYPPih) * (Q_InvTmp_h * Q_InvTmp_h) / 6.
 
-    P1 = Q_InvTmp_GAP    ; for testing spline
+    P1 = Q_InvTmp_Gap    ; for testing spline
+
+
+    Q_Inv_Gap_Tmp = Q_InvTmp_Gap * kEncCntsPerUm
+    Q_Inv_Ele_Tmp = Q_B_Ele_KinPos * kEncCntsPerUm
+    Q_Inv_Tap_Tmp = Q_C_Tap_KinPos * kEncCntsPerUm
+    Q_Inv_Tlt_Tmp = Q_U_Tlt_KinPos * kEncCntsPerUm
+    
+    P_Mtr2_KinPos = Q_Inv_Gap_Tmp / 2 + Q_Inv_Ele_Tmp + Q_Inv_Tap_Tmp / 4 + Q_Inv_Tlt_Tmp / 2
+    P_Mtr3_KinPos = Q_Inv_Gap_Tmp / 2 + Q_Inv_Ele_Tmp - Q_Inv_Tap_Tmp / 4 - Q_Inv_Tlt_Tmp / 2
+    P_Mtr4_KinPos = Q_Inv_Gap_Tmp / 2 - Q_Inv_Ele_Tmp + Q_Inv_Tap_Tmp / 4 - Q_Inv_Tlt_Tmp / 2
+    P_Mtr5_KinPos = Q_Inv_Gap_Tmp / 2 - Q_Inv_Ele_Tmp - Q_Inv_Tap_Tmp / 4 + Q_Inv_Tlt_Tmp / 2
+
+    I15 = 1 ; Cmopute in radian
+    P_Mtr6_KinPos = kEncCtsPerDeg*ACOS((ANG_OVER_EV / Q_X_Energy_KinPos) / (2 * P_DSPACING) / kPI * 180 - P_DELTABRAGG)
+
+
+
+
+
 
     // Restore original pointers
     iXik   = Q_InvSave_iXik  
@@ -330,12 +439,110 @@ Close
 
 
 
-Open PLC 2 Clear
+#define Q_PRTmp_Gap      Q328
+#define Q_PRTmp_klo      Q329
+#define Q_PRTmp_khi      Q330
+#define Q_PRTmp_k        Q331
+#define Q_PRTmp_h        Q332
+#define Q_PRTmp_a        Q333
+#define Q_PRTmp_b        Q334
+#define Q_PRTmp_EnGap    Q335
+#define Q_PRTmp_EnBragg  Q336
+#define Q_PRSave_iYrk    Q337
+#define Q_PRSave_iXrl    Q338
+#define Q_PRSave_iXrh    Q339
+#define Q_PRSave_iYrl    Q340
+#define Q_PRSave_iYrh    Q341
+#define Q_PRSave_iXPPrl  Q342
+#define Q_PRSave_iXPPrh  Q343
+#define Q_PR_Mtr2Tmp     Q344
+#define Q_PR_Mtr3Tmp     Q345
+#define Q_PR_Mtr4Tmp     Q346
+#define Q_PR_Mtr5Tmp     Q347
+
+#define Q_X_Energy_PR    Q87
+
+Open PLC 4 Clear
 
 ADDRESS &3
 
+// These should be taken from EPICS input for HDCM
+P_XOFFSET     = 24.770
+P_DSPACING    = 3.128774072188798
+P_DELTABRAGG  = 0.22324196449806297
+P_C2XCAL      = 3.6
+P_T2CAL       = 15.0347755916
+
+
+
+
 I15 = 1 ; Cmopute in radian
-Q77 = ANG_OVER_EV / (2 * P_DSPACING *SIN((M_Mtr3pos/(I308*32) + P_DELTABRAGG) *kPI/180))
+;Q77 = ANG_OVER_EV / (2 * P_DSPACING *SIN((M_Mtr6pos/(I608*32) + P_DELTABRAGG) *kPI/180))
+Q77 = 1000 * ANG_OVER_EV / (2 * P_DSPACING *SIN((M_Mtr6pos/kEncCtsPerDeg/(I608*32) + P_DELTABRAGG) *kPI/180))
+
+
+
+    Q_PRSave_iYrk   = iYrk     
+    Q_PRSave_iXrl   = iXrl     
+    Q_PRSave_iXrh   = iXrh     
+    Q_PRSave_iYrl   = iYrl     
+    Q_PRSave_iYrh   = iYrh     
+    Q_PRSave_iXPPrl = iXPPrl   
+    Q_PRSave_iXPPrh = iXPPrh   
+
+
+    Q_PR_Mtr2Tmp = (M262/I208/32) / kEncCntsPerUm
+    Q_PR_Mtr3Tmp = (M362/I308/32) / kEncCntsPerUm
+    Q_PR_Mtr4Tmp = (M462/I408/32) / kEncCntsPerUm
+    Q_PR_Mtr5Tmp = (M562/I508/32) / kEncCntsPerUm
+    Q_PRTmp_Gap   = (Q_PR_Mtr2Tmp + Q_PR_Mtr3Tmp + Q_PR_Mtr4Tmp + Q_PR_Mtr5Tmp)/2  // not an axis: GAP
+    ;Q_B_Ele_PR = (Q_PR_Mtr2Tmp + Q_PR_Mtr3Tmp - Q_PR_Mtr4Tmp - Q_PR_Mtr5Tmp)/4  // Q3 = B axis: CENTER OFFSET
+    ;Q_C_Tap_PR =  Q_PR_Mtr2Tmp + Q_PR_Mtr4Tmp - Q_PR_Mtr3Tmp - Q_PR_Mtr5Tmp     // Q4 = C axis: TAPER
+    ;Q_U_Tlt_PR = (Q_PR_Mtr2Tmp - Q_PR_Mtr3Tmp - Q_PR_Mtr4Tmp + Q_PR_Mtr5Tmp)/2  // Q5 = U axis: TILT
+
+
+    Q_PRTmp_klo = 0
+    Q_PRTmp_khi = kNSPLINE - 1
+
+    while (Q_PRTmp_khi - Q_PRTmp_klo > 1)
+        Q_PRTmp_k = INT((Q_PRTmp_khi + Q_PRTmp_klo)/2)
+        iYrk = Q_PRSave_iYrk + Q_PRTmp_k
+        if (vYrk > Q_PRTmp_Gap)
+            Q_PRTmp_khi = Q_PRTmp_k
+        else
+            Q_PRTmp_klo = Q_PRTmp_k
+        endif
+    endw
+
+    iYrl = Q_PRSave_iYrl + Q_PRTmp_klo
+    iYrh = Q_PRSave_iYrh + Q_PRTmp_khi
+    iXrl = Q_PRSave_iXrl + Q_PRTmp_klo
+    iXrh = Q_PRSave_iXrh + Q_PRTmp_khi
+    iXPPrl = Q_PRSave_iXPPrl + Q_PRTmp_klo
+    iXPPrh = Q_PRSave_iXPPrh + Q_PRTmp_khi
+
+    Q_PRTmp_h = vYrh - vYrl
+    Q_PRTmp_a = (vYrh - Q_PRTmp_Gap) / Q_PRTmp_h
+    Q_PRTmp_b = (Q_PRTmp_Gap - vYrl) / Q_PRTmp_h
+
+    Q_PRTmp_EnGap = Q_PRTmp_a * vXrl + Q_PRTmp_b * vXrh + ((Q_PRTmp_a * Q_PRTmp_a * Q_PRTmp_a - Q_PRTmp_a) * vXPPrl + (Q_PRTmp_b * Q_PRTmp_b * Q_PRTmp_b - Q_PRTmp_b) * vXPPrh) * (Q_PRTmp_h * Q_PRTmp_h) / 6.
+
+    ;I15 = 1 ; Cmopute in radian
+    ;Q_PRTmp_EnBragg = ANG_OVER_EV / (2 * P_DSPACING *SIN((M_Mtr6pos/kEncCtsPerDeg/(I608*32) + P_DELTABRAGG) *kPI/180))
+
+    Q_X_Energy_PR = Q_PRTmp_EnGap
+
+    // Restore original pointers
+    iYrk   = Q_PRSave_iYrk  
+    iXrl   = Q_PRSave_iXrl  
+    iXrh   = Q_PRSave_iXrh  
+    iYrl   = Q_PRSave_iYrl  
+    iYrh   = Q_PRSave_iYrh  
+    iXPPrl = Q_PRSave_iXPPrl
+    iXPPrh = Q_PRSave_iXPPrh
+
+
+
 
 Close
 
@@ -346,50 +553,80 @@ Close
 
 
 
-// Spline test date
-P220 = 0
-P221 = 1
-P222 = 2
-P223 = 3
-P224 = 4
-P225 = 5
-P226 = 6
-P227 = 7
-P228 = 8
-P229 = 9
-P230 = 10
-P231 = 11
-P240 = 0
-P241 = 2
-P242 = 4
-P243 = 6
-P244 = 8
-P245 = 10
-P246 = 12
-P247 = 14
-P248 = 16
-P249 = 18
-P250 = 20
-P251 = 22
+;;;;;;// Spline test date
+;;;;;;P220 = 0
+;;;;;;P221 = 1
+;;;;;;P222 = 2
+;;;;;;P223 = 3
+;;;;;;P224 = 4
+;;;;;;P225 = 5
+;;;;;;P226 = 6
+;;;;;;P227 = 7
+;;;;;;P228 = 8
+;;;;;;P229 = 9
+;;;;;;P230 = 10
+;;;;;;P231 = 11
+;;;;;;P240 = 0
+;;;;;;P241 = 2
+;;;;;;P242 = 4
+;;;;;;P243 = 6
+;;;;;;P244 = 8
+;;;;;;P245 = 10
+;;;;;;P246 = 12
+;;;;;;P247 = 14
+;;;;;;P248 = 16
+;;;;;;P249 = 18
+;;;;;;P250 = 20
+;;;;;;P251 = 22
+;;;;;;// squared
+;;;;;;P240 = 0
+;;;;;;P241 = 1
+;;;;;;P242 = 4
+;;;;;;P243 = 9
+;;;;;;P244 = 16
+;;;;;;P245 = 25
+;;;;;;P246 = 36
+;;;;;;P247 = 49
+;;;;;;P248 = 64
+;;;;;;P249 = 81
+;;;;;;P250 = 100
+;;;;;;P251 = 121
 
-P240 = 0
-P241 = 1
-P242 = 4
-P243 = 9
-P244 = 16
-P245 = 25
-P246 = 36
-P247 = 49
-P248 = 64
-P249 = 81
-P250 = 100
-P251 = 121
+// From real measurement
+P220 = 1507.6373549099999
+P221 = 1674.79862826
+P222 = 1846.65630845
+P223 = 2019.7428188000001
+P224 = 2189.80260386
+P225 = 2354.80118094
+P226 = 2513.81335564
+P227 = 2664.6321347400003
+P228 = 2806.2601588899997
+P229 = 2938.31542662
+P230 = 3059.85772362
+P231 = 3172.0305463199998
+P240 = 6500.4145
+P241 = 6999.704000000001
+P242 = 7500.167
+P243 = 8000.769
+P244 = 8500.225
+P245 = 9000.887999999999
+P246 = 9500.457
+P247 = 9999.926500000001
+P248 = 10500.916
+P249 = 11001.1665
+P250 = 11499.9345
+P251 = 12000.4565
+
+// Fake ID and mono starting point
+M262 = 9500/2*I208*32
+M362 = 9500/2*I308*32
+M462 = 9500/2*I408*32
+M562 = 9500/2*I508*32
+// Is in keV: 2.5136712152977103
+M662 = 51.79716858776636*1000*I608*32
 
 
-#define kMINGAP       0
-#define kMAXGAP     500
-#define kMINENERGY    0
-#define kMAXENERGY   11
 
 
 Open PLC 3 Clear
@@ -554,17 +791,18 @@ Open PLC 3 Clear
 Close
 
 
-&3 #1->I #2->I #3->I #4->I
+&3 #2->I #3->I #4->I #5->I
 Open PROG 3 Clear
-
+LINEAR ABS
 TA500
-TM2000
+FRAX(X)
+F(10)
 
-X(5)
+B(0) C(0) U(0) X(2500) Y(0)
 DWELL 4000
-X(7)
+B(0) C(0) U(0) X(3000) Y(0)
 DWELL 4000
-X(0)
+B(0) C(0) U(0) X(2500) Y(0)
 
 Close
 
